@@ -4,9 +4,10 @@ import { Logo } from "@/components/layout/logo";
 export default function LoginPage() {
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-background">
-      {/* Subtle violet glow over the dark background */}
+      {/* Imagen de fondo (public/bg.png) */}
       <div
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(155,109,255,0.14)_0%,rgba(0,0,0,0)_60%)]"
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: "url('/bg.png')" }}
         aria-hidden
       />
 
