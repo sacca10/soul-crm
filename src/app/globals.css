@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* SOUL — fondo negro con tinte violeta sutil */
+    --background: 260 12% 4%;
+    --foreground: 0 0% 98%;
+
+    --card: 260 10% 7%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 260 12% 4%;
+    --popover-foreground: 0 0% 98%;
+
+    /* Primary: Violet Punk #9B6DFF */
+    --primary: 259 100% 71%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 260 6% 16%;
+    --secondary-foreground: 0 0% 98%;
+
+    --muted: 260 6% 16%;
+    --muted-foreground: 260 6% 65%;
+
+    --accent: 260 6% 16%;
+    --accent-foreground: 0 0% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --success: 142 76% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 260 6% 16%;
+    --input: 260 6% 16%;
+    --ring: 259 100% 71%;
+
+    /* Brand violet palette (HEX-friendly via tokens)
+       Violet Punk #9B6DFF · light #BCA0FF · deep #6D28D9 (Deep Mauve #C46BFF) */
+    --gold: 259 100% 71%;         /* #9B6DFF */
+    --gold-light: 258 100% 81%;   /* #BCA0FF */
+    --gold-dark: 263 70% 50%;     /* #6D28D9 */
+
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Global scrollbar styling — violeta, thin, premium feel */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--gold) / 0.35) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    hsl(var(--gold-dark) / 0.5),
+    hsl(var(--gold) / 0.55),
+    hsl(var(--gold-light) / 0.5)
+  );
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    hsl(var(--gold-dark)),
+    hsl(var(--gold)),
+    hsl(var(--gold-light))
+  );
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+@layer utilities {
+  /* Hide scrollbars completely (used inside kanban columns) */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Thin scrollbar with violet tint — for horizontal kanban scroll */
+  .scrollbar-thin-gold {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--gold) / 0.45) transparent;
+  }
+  .scrollbar-thin-gold::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  .scrollbar-thin-gold::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin-gold::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--gold-dark) / 0.6),
+      hsl(var(--gold) / 0.6),
+      hsl(var(--gold-light) / 0.6)
+    );
+    border-radius: 9999px;
+  }
+  .scrollbar-thin-gold::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--gold-dark)),
+      hsl(var(--gold)),
+      hsl(var(--gold-light))
+    );
+  }
+
+  .kpi-gradient-purple {
+    background: linear-gradient(135deg, rgba(155, 109, 255, 0.15) 0%, rgba(0, 0, 0, 0) 100%);
+  }
+  .kpi-gradient-green {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(0, 0, 0, 0) 100%);
+  }
+  .kpi-gradient-red {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15) 0%, rgba(0, 0, 0, 0) 100%);
+  }
+  .kpi-gradient-yellow {
+    background: linear-gradient(135deg, rgba(234, 179, 8, 0.15) 0%, rgba(0, 0, 0, 0) 100%);
+  }
+  .kpi-gradient-blue {
+    background: linear-gradient(135deg, rgba(155, 109, 255, 0.15) 0%, rgba(0, 0, 0, 0) 100%);
+  }
+  .kpi-gradient-gold {
+    background:
+      linear-gradient(135deg, rgba(155, 109, 255, 0.18) 0%, rgba(0, 0, 0, 0) 100%);
+    border: 1px solid rgba(155, 109, 255, 0.18);
+  }
+
+  /* Violet text gradient helper */
+  .text-gold-gradient {
+    background: linear-gradient(135deg, #c46bff 0%, #9b6dff 50%, #6d28d9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Subtle violet ring used on hover/focus for premium buttons */
+  .ring-gold {
+    box-shadow: 0 0 0 1px hsl(var(--gold) / 0.5),
+                0 0 14px hsl(var(--gold) / 0.18);
+  }
+}
