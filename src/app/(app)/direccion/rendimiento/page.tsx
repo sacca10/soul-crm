@@ -44,11 +44,9 @@ export default async function RendimientoPage({
   const vslStages = [
     { label: "Chats únicos", count: vsl.chatsUnicos, color: VIOLET },
     { label: "Conversaciones", count: vsl.conversaciones, color: VIOLET },
-    { label: "Enviamos VSL", count: vsl.enviamosVsl, color: VIOLET },
-    { label: "Vistas VSL", count: vsl.vistasVsl, color: VIOLET },
-    { label: "Llegaron al CTA", count: vsl.llegaronCtaVsl, color: VIOLET },
-    { label: "Respondieron CTA", count: vsl.respondieronCtaVsl, color: VIOLET },
-    { label: "Agendas (manual)", count: vsl.agendasManual, color: VIOLET },
+    { label: "VSL Enviados", count: vsl.enviamosVsl, color: VIOLET },
+    { label: "Calendarios Enviados", count: vsl.calendariosEnviados, color: VIOLET },
+    { label: "Agendas", count: vsl.agendasManual, color: VIOLET },
   ];
 
   const principal = [

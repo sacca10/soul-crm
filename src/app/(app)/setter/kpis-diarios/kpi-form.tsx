@@ -73,7 +73,7 @@ export function KpiForm({
                 name="chats_unicos_abiertos"
                 type="number"
                 min="0"
-                placeholder="12"
+                placeholder="0"
                 defaultValue={current?.chats_unicos_abiertos ?? ""}
               />
             </div>
@@ -84,12 +84,12 @@ export function KpiForm({
                 name="conversaciones"
                 type="number"
                 min="0"
-                placeholder="5"
+                placeholder="0"
                 defaultValue={current?.conversaciones ?? ""}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="enviamos_vsl">Enviamos VSL</Label>
+              <Label htmlFor="enviamos_vsl">VSL Enviados</Label>
               <Input
                 id="enviamos_vsl"
                 name="enviamos_vsl"
@@ -100,40 +100,18 @@ export function KpiForm({
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="vistas_vsl">Vistas VSL</Label>
+              <Label htmlFor="calendarios_enviados">Calendarios Enviados</Label>
               <Input
-                id="vistas_vsl"
-                name="vistas_vsl"
+                id="calendarios_enviados"
+                name="calendarios_enviados"
                 type="number"
                 min="0"
                 placeholder="0"
-                defaultValue={current?.vistas_vsl ?? ""}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="llegaron_cta_vsl">Llegaron al CTA</Label>
-              <Input
-                id="llegaron_cta_vsl"
-                name="llegaron_cta_vsl"
-                type="number"
-                min="0"
-                placeholder="0"
-                defaultValue={current?.llegaron_cta_vsl ?? ""}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="respondieron_cta_vsl">Respondieron al CTA</Label>
-              <Input
-                id="respondieron_cta_vsl"
-                name="respondieron_cta_vsl"
-                type="number"
-                min="0"
-                placeholder="0"
-                defaultValue={current?.respondieron_cta_vsl ?? ""}
+                defaultValue={current?.calendarios_enviados ?? ""}
               />
             </div>
             <div className="space-y-2 md:col-span-2">
-              <Label htmlFor="agendas_manual">Agendas (manual)</Label>
+              <Label htmlFor="agendas_manual">Agendas</Label>
               <Input
                 id="agendas_manual"
                 name="agendas_manual"

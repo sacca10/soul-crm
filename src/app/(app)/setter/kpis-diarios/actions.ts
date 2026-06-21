@@ -33,9 +33,7 @@ export async function saveKpiManualAction(
     chats_unicos_abiertos: Number(formData.get("chats_unicos_abiertos") ?? 0),
     conversaciones: Number(formData.get("conversaciones") ?? 0),
     enviamos_vsl: Number(formData.get("enviamos_vsl") ?? 0),
-    vistas_vsl: Number(formData.get("vistas_vsl") ?? 0),
-    llegaron_cta_vsl: Number(formData.get("llegaron_cta_vsl") ?? 0),
-    respondieron_cta_vsl: Number(formData.get("respondieron_cta_vsl") ?? 0),
+    calendarios_enviados: Number(formData.get("calendarios_enviados") ?? 0),
     agendas_manual: Number(formData.get("agendas_manual") ?? 0),
     notas: (formData.get("notas") as string) || null,
   };

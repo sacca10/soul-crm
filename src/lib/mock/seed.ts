@@ -428,6 +428,7 @@ export const mockKpisManual: KpiDiarioManual[] = Array.from({ length: 60 }).map(
   const vistas = Math.max(0, enviamos - intBetween(0, 2));
   const llegaron = Math.max(0, vistas - intBetween(0, 2));
   const respondieron = Math.max(0, llegaron - intBetween(0, 1));
+  const calendarios = Math.max(0, enviamos - intBetween(0, 2));
   return {
     id: `k-${i + 1}`,
     fecha: fecha.toISOString().slice(0, 10),
@@ -437,7 +438,8 @@ export const mockKpisManual: KpiDiarioManual[] = Array.from({ length: 60 }).map(
     vistas_vsl: vistas,
     llegaron_cta_vsl: llegaron,
     respondieron_cta_vsl: respondieron,
-    agendas_manual: Math.max(0, respondieron - intBetween(0, 1)),
+    calendarios_enviados: calendarios,
+    agendas_manual: Math.max(0, calendarios - intBetween(0, 1)),
     notas: null,
   };
 });

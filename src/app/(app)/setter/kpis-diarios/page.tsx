@@ -58,10 +58,8 @@ export default async function KpisDiariosPage({
                 <TableHead>Fecha</TableHead>
                 <TableHead className="text-right">Chats únicos</TableHead>
                 <TableHead className="text-right">Conversaciones</TableHead>
-                <TableHead className="text-right">Enviamos VSL</TableHead>
-                <TableHead className="text-right">Vistas VSL</TableHead>
-                <TableHead className="text-right">Llegaron CTA</TableHead>
-                <TableHead className="text-right">Respondieron CTA</TableHead>
+                <TableHead className="text-right">VSL Enviados</TableHead>
+                <TableHead className="text-right">Calendarios Enviados</TableHead>
                 <TableHead className="text-right">Agendas</TableHead>
                 <TableHead>Notas</TableHead>
                 <TableHead className="text-right">Acciones</TableHead>
@@ -74,9 +72,7 @@ export default async function KpisDiariosPage({
                   <TableCell className="text-right">{k.chats_unicos_abiertos}</TableCell>
                   <TableCell className="text-right">{k.conversaciones}</TableCell>
                   <TableCell className="text-right">{k.enviamos_vsl}</TableCell>
-                  <TableCell className="text-right">{k.vistas_vsl}</TableCell>
-                  <TableCell className="text-right">{k.llegaron_cta_vsl}</TableCell>
-                  <TableCell className="text-right">{k.respondieron_cta_vsl}</TableCell>
+                  <TableCell className="text-right">{k.calendarios_enviados ?? 0}</TableCell>
                   <TableCell className="text-right">{k.agendas_manual}</TableCell>
                   <TableCell className="text-muted-foreground">{k.notas ?? "—"}</TableCell>
                   <TableCell>
@@ -99,7 +95,7 @@ export default async function KpisDiariosPage({
               ))}
               {kpis.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={10} className="py-8 text-center text-sm text-muted-foreground">
+                  <TableCell colSpan={8} className="py-8 text-center text-sm text-muted-foreground">
                     Todavía no hay KPIs registrados.
                   </TableCell>
                 </TableRow>

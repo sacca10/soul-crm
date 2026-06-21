@@ -289,10 +289,14 @@ export interface KpiDiarioManual {
   chats_unicos_abiertos: number;
   conversaciones: number;
   enviamos_vsl: number;
-  vistas_vsl: number;
-  llegaron_cta_vsl: number;
-  respondieron_cta_vsl: number;
+  /** Calendarios (links de Calendly) enviados */
+  calendarios_enviados?: number;
   agendas_manual: number;
+  // Legacy del funnel VSL detallado — ya no se cargan desde el form, pero las
+  // columnas siguen en la DB. Opcionales para no romper datos viejos.
+  vistas_vsl?: number;
+  llegaron_cta_vsl?: number;
+  respondieron_cta_vsl?: number;
   notas?: string | null;
 }
 

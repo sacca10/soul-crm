@@ -281,9 +281,7 @@ export interface VslFunnelManual {
   chatsUnicos: number;
   conversaciones: number;
   enviamosVsl: number;
-  vistasVsl: number;
-  llegaronCtaVsl: number;
-  respondieronCtaVsl: number;
+  calendariosEnviados: number;
   agendasManual: number;
 }
 
@@ -300,9 +298,7 @@ export async function vslFunnelManual(
     chatsUnicos: sum((k) => k.chats_unicos_abiertos),
     conversaciones: sum((k) => k.conversaciones),
     enviamosVsl: sum((k) => k.enviamos_vsl ?? 0),
-    vistasVsl: sum((k) => k.vistas_vsl ?? 0),
-    llegaronCtaVsl: sum((k) => k.llegaron_cta_vsl ?? 0),
-    respondieronCtaVsl: sum((k) => k.respondieron_cta_vsl ?? 0),
+    calendariosEnviados: sum((k) => k.calendarios_enviados ?? 0),
     agendasManual: sum((k) => k.agendas_manual ?? 0),
   };
 }
