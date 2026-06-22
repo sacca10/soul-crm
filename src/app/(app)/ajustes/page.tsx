@@ -15,7 +15,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { getPendingUsers, getUsers } from "@/lib/data/users";
 import { getBilleteras, getProgramas } from "@/lib/data/catalogs";
 import { getLatestFxRate } from "@/lib/fx";
-import { RefreshFxButton, FxManualForm } from "./fx-form";
+import { RefreshFxButton } from "./fx-form";
 import { formatDate } from "@/lib/utils";
 import {
   addBilleteraAction,
@@ -475,13 +475,11 @@ export default async function AjustesPage() {
                 </div>
               )}
               <RefreshFxButton />
-              <div className="border-t border-border pt-4">
-                <FxManualForm defaultValue={latestFx?.usd_cripto ?? null} />
-                <p className="mt-2 text-xs text-muted-foreground">
-                  El valor automático viene de dolarapi.com y puede diferir de
-                  dolarhoy. Si querés usar exactamente el de dolarhoy, cargalo acá.
-                </p>
-              </div>
+              <p className="text-xs text-muted-foreground">
+                La cotización del dólar cripto se toma automáticamente de
+                criptoya.com (mismo valor que dolarhoy) y se actualiza todos los
+                días. Podés forzar la actualización con &quot;Refrescar ahora&quot;.
+              </p>
             </CardContent>
           </Card>
         </TabsContent>

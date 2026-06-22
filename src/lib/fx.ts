@@ -27,53 +27,57 @@ export async function getLatestFxRate(): Promise<FxRate | null> {
 }
 
 /**
- * Fija a mano la cotización del dólar cripto para hoy (override del valor
- * automático de dolarapi.com). Útil cuando se quiere usar exactamente el valor
- * de otra fuente (ej. dolarhoy). Queda como la cotización vigente.
- */
-export async function setManualCriptoRate(value: number): Promise<FxRate> {
-  const today = new Date().toISOString().slice(0, 10);
-  const supabase = createServiceClient();
-  const { data, error } = await supabase
-    .from("fx_rates")
-    .upsert(
-      {
-        fecha: today,
-        usd_cripto: value,
-        actualizado_at: new Date().toISOString(),
-      },
-      { onConflict: "fecha" },
-    )
-    .select()
-    .single();
-  if (error) throw error;
-  return data as FxRate;
-}
-
-/**
- * Pull latest FX rates from dolarapi.com and upsert into `fx_rates`.
- * Called by Vercel Cron at /api/cron/fx-rates.
+ * Refresca las cotizaciones y las guarda en `fx_rates`.
+ * Llamado por el Vercel Cron en /api/cron/fx-rates y por el botón "Refrescar".
+ *
+ * El dólar cripto se toma de criptoya.com (USDT venta), que es la referencia
+ * de cripto en Argentina y coincide con dolarhoy. blue/mep/oficial se siguen
+ * trayendo de dolarapi.com (quedan en la base, aunque ya no se muestran).
  */
 export async function refreshFxRates(): Promise<FxRate> {
-  const res = await fetch("https://dolarapi.com/v1/dolares", {
-    next: { revalidate: 0 },
-  });
-
-  if (!res.ok) {
-    throw new Error(`dolarapi.com responded ${res.status}`);
-  }
-
-  const data = (await res.json()) as Array<{
-    casa: string;
-    venta: number;
-  }>;
-
   const today = new Date().toISOString().slice(0, 10);
 
-  const cripto = data.find((d) => d.casa === "cripto")?.venta ?? null;
-  const blue = data.find((d) => d.casa === "blue")?.venta ?? null;
-  const mep = data.find((d) => d.casa === "bolsa")?.venta ?? null;
-  const oficial = data.find((d) => d.casa === "oficial")?.venta ?? null;
+  // blue / mep / oficial (+ cripto de fallback) desde dolarapi.com
+  let blue: number | null = null;
+  let mep: number | null = null;
+  let oficial: number | null = null;
+  let criptoFallback: number | null = null;
+  try {
+    const res = await fetch("https://dolarapi.com/v1/dolares", {
+      next: { revalidate: 0 },
+    });
+    if (res.ok) {
+      const data = (await res.json()) as Array<{ casa: string; venta: number }>;
+      blue = data.find((d) => d.casa === "blue")?.venta ?? null;
+      mep = data.find((d) => d.casa === "bolsa")?.venta ?? null;
+      oficial = data.find((d) => d.casa === "oficial")?.venta ?? null;
+      criptoFallback = data.find((d) => d.casa === "cripto")?.venta ?? null;
+    }
+  } catch {
+    // si dolarapi falla, seguimos con criptoya para el cripto
+  }
+
+  // Dólar cripto desde criptoya.com (USDT venta) — coincide con dolarhoy
+  let cripto: number | null = criptoFallback;
+  try {
+    const res = await fetch("https://criptoya.com/api/dolar", {
+      next: { revalidate: 0 },
+    });
+    if (res.ok) {
+      const data = (await res.json()) as {
+        cripto?: Record<string, { ask?: number; bid?: number }>;
+      };
+      const c = data.cripto ?? {};
+      cripto =
+        c.usdt?.ask ?? c.usdc?.ask ?? c.ccb?.ask ?? criptoFallback;
+    }
+  } catch {
+    // si criptoya falla, queda el cripto de dolarapi (fallback)
+  }
+
+  if (cripto == null && blue == null && oficial == null) {
+    throw new Error("No se pudieron obtener cotizaciones (dolarapi y criptoya fallaron).");
+  }
 
   const supabase = createServiceClient();
   const { data: upserted, error } = await supabase
