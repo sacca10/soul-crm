@@ -30,7 +30,7 @@ export async function getLatestFxRate(): Promise<FxRate | null> {
  * Refresca las cotizaciones y las guarda en `fx_rates`.
  * Llamado por el Vercel Cron en /api/cron/fx-rates y por el botón "Refrescar".
  *
- * El dólar cripto se toma de criptoya.com (USDT venta), que es la referencia
+ * El dólar cripto se toma de criptoya.com (USDC venta), que es la referencia
  * de cripto en Argentina y coincide con dolarhoy. blue/mep/oficial se siguen
  * trayendo de dolarapi.com (quedan en la base, aunque ya no se muestran).
  */
@@ -69,7 +69,7 @@ export async function refreshFxRates(): Promise<FxRate> {
       };
       const c = data.cripto ?? {};
       cripto =
-        c.usdt?.ask ?? c.usdc?.ask ?? c.ccb?.ask ?? criptoFallback;
+        c.usdc?.ask ?? c.usdt?.ask ?? c.ccb?.ask ?? criptoFallback;
     }
   } catch {
     // si criptoya falla, queda el cripto de dolarapi (fallback)
