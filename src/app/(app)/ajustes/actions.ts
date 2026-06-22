@@ -17,7 +17,7 @@ import {
   renamePrograma,
 } from "@/lib/data/catalogs";
 import { normalizeCalendarInput, updateAppConfig } from "@/lib/data/app-config";
-import { refreshFxRates } from "@/lib/fx";
+import { refreshFxRates, setManualCriptoRate } from "@/lib/fx";
 import type { UserRol } from "@/lib/domain";
 
 function revalidateAll() {
@@ -200,13 +200,38 @@ export async function refreshFxNowAction(
   try {
     const rate = await refreshFxRates();
     revalidatePath("/ajustes");
+    revalidatePath("/direccion/general");
+    revalidatePath("/direccion/rendimiento");
     const fmt = (n: number | null) => (n ? `$${n.toFixed(2)}` : "—");
     return {
       success: true,
-      message: `Cotizaciones actualizadas — Blue: ${fmt(rate.usd_blue)} · MEP: ${fmt(rate.usd_mep)} · Oficial: ${fmt(rate.usd_oficial)}`,
+      message: `Cotización cripto actualizada — ${fmt(rate.usd_cripto)}`,
     };
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     return { success: false, message: `Error al traer cotizaciones: ${msg}` };
+  }
+}
+
+export async function setFxManualAction(
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  try {
+    const value = Number(formData.get("usd_cripto") ?? 0);
+    if (!value || value <= 0) {
+      return { success: false, message: "Ingresá un valor válido (ej. 1524)." };
+    }
+    await setManualCriptoRate(value);
+    revalidatePath("/ajustes");
+    revalidatePath("/direccion/general");
+    revalidatePath("/direccion/rendimiento");
+    return {
+      success: true,
+      message: `Cotización cripto fijada a mano en $${value.toFixed(2)}.`,
+    };
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return { success: false, message: `Error: ${msg}` };
   }
 }

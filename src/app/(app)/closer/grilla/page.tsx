@@ -90,6 +90,7 @@ export default async function GrillaReportesPage({
       <Tabs defaultValue="resumen">
         <TabsList>
           <TabsTrigger value="resumen">Resumen</TabsTrigger>
+          <TabsTrigger value="situacion">Situación actual</TabsTrigger>
           <TabsTrigger value="dolores">Dolores</TabsTrigger>
           <TabsTrigger value="razones">Razones de compra</TabsTrigger>
           <TabsTrigger value="objeciones">Objeciones</TabsTrigger>
@@ -191,6 +192,9 @@ export default async function GrillaReportesPage({
           </Card>
         </TabsContent>
 
+        <TabsContent value="situacion">
+          <QualTable items={buildItems((a) => a.situacion_actual)} />
+        </TabsContent>
         <TabsContent value="dolores">
           <QualTable items={buildItems((a) => a.dolores)} />
         </TabsContent>

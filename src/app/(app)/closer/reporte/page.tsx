@@ -194,6 +194,17 @@ export default async function ReporteLlamadaPage({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            {/* Situación actual */}
+            <div className="space-y-2">
+              <Label htmlFor="situacion_actual">Situación actual</Label>
+              <Textarea
+                id="situacion_actual"
+                name="situacion_actual"
+                rows={3}
+                placeholder="En qué situación está hoy el lead…"
+              />
+            </div>
+
             {/* Dolores */}
             <div className="space-y-2">
               <Label htmlFor="dolores">Dolores</Label>

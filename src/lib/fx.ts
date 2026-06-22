@@ -27,6 +27,30 @@ export async function getLatestFxRate(): Promise<FxRate | null> {
 }
 
 /**
+ * Fija a mano la cotización del dólar cripto para hoy (override del valor
+ * automático de dolarapi.com). Útil cuando se quiere usar exactamente el valor
+ * de otra fuente (ej. dolarhoy). Queda como la cotización vigente.
+ */
+export async function setManualCriptoRate(value: number): Promise<FxRate> {
+  const today = new Date().toISOString().slice(0, 10);
+  const supabase = createServiceClient();
+  const { data, error } = await supabase
+    .from("fx_rates")
+    .upsert(
+      {
+        fecha: today,
+        usd_cripto: value,
+        actualizado_at: new Date().toISOString(),
+      },
+      { onConflict: "fecha" },
+    )
+    .select()
+    .single();
+  if (error) throw error;
+  return data as FxRate;
+}
+
+/**
  * Pull latest FX rates from dolarapi.com and upsert into `fx_rates`.
  * Called by Vercel Cron at /api/cron/fx-rates.
  */

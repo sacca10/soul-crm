@@ -28,6 +28,9 @@ export default async function TriagesActivosPage() {
     .filter((t) => {
       const ag = t.agenda_id ? agendaById.get(t.agenda_id) : null;
       if (!ag) return false;
+      // Una vez que se cargó el reporte (estado_llamada deja de ser "pendiente"),
+      // el triage sale de activos.
+      if (ag.estado_llamada !== "pendiente") return false;
       return new Date(ag.fecha_hora_llamada) >= cutoff;
     })
     .sort((a, b) => {
