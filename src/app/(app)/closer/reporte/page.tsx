@@ -187,13 +187,36 @@ export default async function ReporteLlamadaPage({
 
         <Card>
           <CardHeader>
-            <CardTitle>Resultado y objeciones</CardTitle>
+            <CardTitle>Reporte de la llamada</CardTitle>
             <CardDescription>
-              Completá lo que aplique. La objeción secundaria, motivo de no cierre y razón de
-              compra son todos opcionales.
+              Lo central del reporte: dolores, razones de compra, objeciones y frases
+              clave del lead. Completá lo que aplique.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-6">
+            {/* Dolores */}
+            <div className="space-y-2">
+              <Label htmlFor="dolores">Dolores</Label>
+              <Textarea
+                id="dolores"
+                name="dolores"
+                rows={3}
+                placeholder="Qué problemas / dolores expresó el lead…"
+              />
+            </div>
+
+            {/* Razones de compra */}
+            <div className="space-y-2">
+              <Label htmlFor="razon_compra">Razones de compra</Label>
+              <Textarea
+                id="razon_compra"
+                name="razon_compra"
+                rows={3}
+                placeholder="Qué lo motiva a avanzar / por qué compraría…"
+              />
+            </div>
+
+            {/* Objeciones */}
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="objecion_principal">Objeción principal</Label>
@@ -204,9 +227,24 @@ export default async function ReporteLlamadaPage({
                 <Input
                   id="objecion_secundaria"
                   name="objecion_secundaria"
-                  placeholder="Otra cosa que mencionó…"
+                  placeholder="Otra objeción que mencionó…"
                 />
               </div>
+            </div>
+
+            {/* Frases clave */}
+            <div className="space-y-2">
+              <Label htmlFor="frases_clave">Frases clave del lead</Label>
+              <Textarea
+                id="frases_clave"
+                name="frases_clave"
+                rows={3}
+                placeholder="Frases textuales que dijo y conviene recordar…"
+              />
+            </div>
+
+            {/* Cierre / seguimiento */}
+            <div className="grid grid-cols-1 gap-4 border-t border-border pt-4 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="motivo_no_cierre">Motivo de no cierre (si aplica)</Label>
                 <Textarea
@@ -214,15 +252,6 @@ export default async function ReporteLlamadaPage({
                   name="motivo_no_cierre"
                   rows={2}
                   placeholder="Por qué no cerró la venta…"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="razon_compra">Razón de compra (si cerró)</Label>
-                <Textarea
-                  id="razon_compra"
-                  name="razon_compra"
-                  rows={2}
-                  placeholder="Por qué decidió comprar…"
                 />
               </div>
               <div className="space-y-2">

@@ -30,7 +30,7 @@ async function toUsd(
  */
 export async function facturacion({
   range,
-  fxStrategy = "blue",
+  fxStrategy = "cripto",
 }: KpiOptions): Promise<number> {
   const supabase = createClient();
   const { data } = await supabase
@@ -59,7 +59,7 @@ export async function facturacion({
  */
 export async function cashCollected({
   range,
-  fxStrategy = "blue",
+  fxStrategy = "cripto",
 }: KpiOptions): Promise<number> {
   const supabase = createClient();
   const [agRes, coRes] = await Promise.all([
@@ -108,7 +108,7 @@ export async function cashCollected({
  */
 export async function cashSeguimiento({
   range,
-  fxStrategy = "blue",
+  fxStrategy = "cripto",
 }: KpiOptions): Promise<number> {
   const supabase = createClient();
   const { data } = await supabase

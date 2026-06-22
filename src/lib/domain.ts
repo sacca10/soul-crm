@@ -192,6 +192,10 @@ export interface Agenda {
   objecion_secundaria?: string | null;
   motivo_no_cierre?: string | null;
   razon_compra?: string | null;
+  /** Dolores / problemas del lead que surgieron en la llamada */
+  dolores?: string | null;
+  /** Frases textuales clave que dijo el lead */
+  frases_clave?: string | null;
   feedback_notas?: string | null;
   proximo_seguimiento?: string | null;
 }

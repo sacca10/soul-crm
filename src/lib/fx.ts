@@ -1,9 +1,10 @@
 import { createServiceClient } from "@/lib/supabase/server";
 
-export type FxStrategy = "blue" | "mep" | "oficial";
+export type FxStrategy = "cripto" | "blue" | "mep" | "oficial";
 
 export interface FxRate {
   fecha: string;
+  usd_cripto: number | null;
   usd_blue: number | null;
   usd_mep: number | null;
   usd_oficial: number | null;
@@ -18,7 +19,7 @@ export async function getLatestFxRate(): Promise<FxRate | null> {
   const supabase = createServiceClient();
   const { data } = await supabase
     .from("fx_rates")
-    .select("fecha, usd_blue, usd_mep, usd_oficial, actualizado_at")
+    .select("fecha, usd_cripto, usd_blue, usd_mep, usd_oficial, actualizado_at")
     .order("fecha", { ascending: false })
     .limit(1)
     .maybeSingle();
@@ -45,6 +46,7 @@ export async function refreshFxRates(): Promise<FxRate> {
 
   const today = new Date().toISOString().slice(0, 10);
 
+  const cripto = data.find((d) => d.casa === "cripto")?.venta ?? null;
   const blue = data.find((d) => d.casa === "blue")?.venta ?? null;
   const mep = data.find((d) => d.casa === "bolsa")?.venta ?? null;
   const oficial = data.find((d) => d.casa === "oficial")?.venta ?? null;
@@ -55,6 +57,7 @@ export async function refreshFxRates(): Promise<FxRate> {
     .upsert(
       {
         fecha: today,
+        usd_cripto: cripto,
         usd_blue: blue,
         usd_mep: mep,
         usd_oficial: oficial,
@@ -75,7 +78,7 @@ export async function refreshFxRates(): Promise<FxRate> {
  */
 export async function getFxForDate(
   fecha: string | Date,
-  strategy: FxStrategy = "blue",
+  strategy: FxStrategy = "cripto",
 ): Promise<number> {
   const dateStr =
     typeof fecha === "string" ? fecha : fecha.toISOString().slice(0, 10);
@@ -83,7 +86,7 @@ export async function getFxForDate(
   const supabase = createServiceClient();
   const { data } = await supabase
     .from("fx_rates")
-    .select("usd_blue, usd_mep, usd_oficial")
+    .select("usd_cripto, usd_blue, usd_mep, usd_oficial")
     .lte("fecha", dateStr)
     .order("fecha", { ascending: false })
     .limit(1)
@@ -92,6 +95,7 @@ export async function getFxForDate(
   if (!data) return 1; // fallback: assume 1:1 if no rate available
   const rate = data as Record<string, number | null>;
   const fieldMap: Record<FxStrategy, string> = {
+    cripto: "usd_cripto",
     blue: "usd_blue",
     mep: "usd_mep",
     oficial: "usd_oficial",
@@ -105,7 +109,7 @@ export async function getFxForDate(
 export async function arsToUsd(
   amount: number,
   fecha: string | Date,
-  strategy: FxStrategy = "blue",
+  strategy: FxStrategy = "cripto",
 ): Promise<number> {
   const rate = await getFxForDate(fecha, strategy);
   return amount / rate;

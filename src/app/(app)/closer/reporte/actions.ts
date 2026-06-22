@@ -50,6 +50,8 @@ export async function submitReporteAction(formData: FormData) {
     objecion_secundaria: (formData.get("objecion_secundaria") as string) || null,
     motivo_no_cierre: (formData.get("motivo_no_cierre") as string) || null,
     razon_compra: (formData.get("razon_compra") as string) || null,
+    dolores: (formData.get("dolores") as string) || null,
+    frases_clave: (formData.get("frases_clave") as string) || null,
     feedback_notas: (formData.get("feedback_notas") as string) || null,
     proximo_seguimiento: proximoSeguimiento,
   });

@@ -170,8 +170,10 @@ export default async function AgendaDetailPage({ params }: { params: { id: strin
               label="Próximo seguimiento"
               value={agenda.proximo_seguimiento ? formatDate(agenda.proximo_seguimiento) : "—"}
             />
-            <Field label="Motivo de no cierre" value={agenda.motivo_no_cierre ?? "—"} full />
+            <Field label="Dolores" value={agenda.dolores ?? "—"} full />
             <Field label="Razón de compra" value={agenda.razon_compra ?? "—"} full />
+            <Field label="Frases clave" value={agenda.frases_clave ?? "—"} full />
+            <Field label="Motivo de no cierre" value={agenda.motivo_no_cierre ?? "—"} full />
             <Field label="Feedback / notas" value={agenda.feedback_notas ?? "—"} full />
           </CardContent>
         </Card>

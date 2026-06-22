@@ -14,9 +14,8 @@ import {
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { getPendingUsers, getUsers } from "@/lib/data/users";
 import { getBilleteras, getProgramas } from "@/lib/data/catalogs";
-import { getAppConfig } from "@/lib/data/app-config";
 import { getLatestFxRate } from "@/lib/fx";
-import { FxStrategyForm, RefreshFxButton } from "./fx-form";
+import { RefreshFxButton } from "./fx-form";
 import { formatDate } from "@/lib/utils";
 import {
   addBilleteraAction,
@@ -37,13 +36,12 @@ import { cn } from "@/lib/utils";
 export const dynamic = "force-dynamic";
 
 export default async function AjustesPage() {
-  const [users, pending, billeteras, programas, appConfig, latestFx] =
+  const [users, pending, billeteras, programas, latestFx] =
     await Promise.all([
       getUsers(),
       getPendingUsers(),
       getBilleteras(),
       getProgramas(),
-      getAppConfig(),
       getLatestFxRate(),
     ]);
 
@@ -440,43 +438,20 @@ export default async function AjustesPage() {
         <TabsContent value="fx" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Estrategia de conversión USD/ARS</CardTitle>
+              <CardTitle>Cotización Dólar Cripto</CardTitle>
               <CardDescription>
-                Cuando hay montos en ARS, se convierten a USD usando esta cotización
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <FxStrategyForm
-                defaultStrategy={appConfig.fx_strategy ?? "blue"}
-              />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Última cotización registrada</CardTitle>
-              <CardDescription>
-                Datos en vivo desde dolarapi.com
+                Todos los montos en ARS se convierten a USD usando el dólar cripto.
+                Datos en vivo desde dolarapi.com.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {latestFx ? (
                 <>
-                  <div className="grid grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 gap-3 sm:max-w-xs">
                     <FxRateCard
-                      label="Blue"
-                      value={latestFx.usd_blue}
-                      active={appConfig.fx_strategy === "blue"}
-                    />
-                    <FxRateCard
-                      label="MEP"
-                      value={latestFx.usd_mep}
-                      active={appConfig.fx_strategy === "mep"}
-                    />
-                    <FxRateCard
-                      label="Oficial"
-                      value={latestFx.usd_oficial}
-                      active={appConfig.fx_strategy === "oficial"}
+                      label="Dólar Cripto"
+                      value={latestFx.usd_cripto}
+                      active
                     />
                   </div>
                   <div className="text-xs text-muted-foreground">
