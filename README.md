@@ -1,4 +1,4 @@
-# Dashboard Syndicate
+# Soul CRM
 
 A full-stack CRM and operations dashboard built to replace an agency's Airtable-based workflow with a real product: role-based views, lead pipeline management, sales/commission reporting, and automated data capture from marketing and scheduling tools.
 
